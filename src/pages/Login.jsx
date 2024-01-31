@@ -22,7 +22,6 @@ const handleSubmit = (ev) => {
 
     if (isAuthenticated) {
         setLoginError(false); 
-        alert("Success!");
         navigate("/home");
 
     } else {
