@@ -4,7 +4,7 @@ const database = [
     {
         "id": 1,
         "name": "Vinicius Beuther",
-        "cpf": "123.456.789-00",
+        "cpf": "12345678900",
         "birthdayDate": "13/11/2002",
         "address": {
             "st": "St. Iracema",
@@ -15,7 +15,7 @@ const database = [
             "state": "SC"
         },
         "phoneNumber": "47 91234-5678",
-        "loan": new Loan(1000, 12, "WhellChair", 10)
+        "loan": new Loan(1000, 12, "WheelChair", 10)
     },
     {
         "id": 2,
@@ -31,7 +31,7 @@ const database = [
             "state": "SC"
         },
         "phoneNumber": "47 12345-6789",
-        "loan": new Loan(800, 10, "WhellChair", 12)
+        "loan": new Loan(800, 10, "WheelChair", 12)
     }
 ]
 
