@@ -20,7 +20,7 @@ const database = [
     {
         "id": 2,
         "name": "Carla Grossl",
-        "cpf": "987.654.321-00",
+        "cpf": "12345678900",
         "birthdayDate": "11/06/2005",
         "address": {
             "st": "St. Carlos Something",

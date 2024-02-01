@@ -51,7 +51,7 @@ const SearchCustomer = () =>{
         <div>
             {hasResult === true ? (
                 <>
-                <div>
+                <div className="flex items-center justify-between mt-5 pl-1">
                     <Typography>
                         {searchResult.cpf}
                     </Typography>
