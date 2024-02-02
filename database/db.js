@@ -15,6 +15,7 @@ const database = [
             "state": "SC"
         },
         "phoneNumber": "47 91234-5678",
+        "email": "email@gmail.com",
         "loan": new Loan(1000, 12, "WheelChair", 10)
     },
     {
@@ -31,6 +32,7 @@ const database = [
             "state": "SC"
         },
         "phoneNumber": "47 12345-6789",
+        "email": "email2@gmail.com",
         "loan": new Loan(800, 10, "WheelChair", 12)
     }
 ]
