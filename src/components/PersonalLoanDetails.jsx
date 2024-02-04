@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import database from "../../database/db";
-import { Typography } from "@material-tailwind/react";
+import { Button, Typography } from "@material-tailwind/react";
 
 const PersonalLoanDetails = () =>{
     const { customerID } = useParams();
@@ -9,15 +9,26 @@ const PersonalLoanDetails = () =>{
 
     return(
         <div className="PersonalLoanDetail">
-            <Typography variant="h4" className="mt-2">
+            <Typography variant="h4">
                 Empréstimos
             </Typography>
-            <Typography>
-                Total a ser pago: R$ {customer.loan.totalPrice}
-            </Typography>
-            <Typography>
-                Numero de parcelas restantes: {customer.loan.numberOfMonths}
-            </Typography>
+
+            {customer.loan.length === 0 ?
+                <Typography>
+                    Não há emprestimo em aberto.
+                </Typography>
+            : 
+                customer.loan.map((loan, index) => (
+                    <div key={index} className="flex w-full items-center justify-between mt-2 bg-gray-100 p-2 rounded-lg">
+                        <Typography>
+                            {loan.numberOfInstallment}x de ${loan.installments.price}
+                        </Typography>
+                        <Button color="blue" size="sm">
+                            Ver
+                        </Button>
+                    </div>
+                ))
+            }
         </div>
     )
 }

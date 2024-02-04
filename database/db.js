@@ -16,7 +16,7 @@ const database = [
         },
         "phoneNumber": "47 91234-5678",
         "email": "email@gmail.com",
-        "loan": new Loan(1000, 12, "WheelChair", 10)
+        "loan": [new Loan(1000, 12, "WheelChair", 10)]
     },
     {
         "id": 2,
