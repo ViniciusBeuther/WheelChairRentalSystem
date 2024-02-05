@@ -1,6 +1,7 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import database from "../../database/db";
 import { Button, Typography } from "@material-tailwind/react";
+import PaymentDetails from "../pages/PaymentDetails";
 
 const PersonalLoanDetails = () =>{
     const { customerID } = useParams();
@@ -23,9 +24,11 @@ const PersonalLoanDetails = () =>{
                         <Typography>
                             {loan.numberOfInstallment}x de ${loan.installments.price}
                         </Typography>
-                        <Button color="blue" size="sm">
-                            Ver
-                        </Button>
+                        <Link to={`/paymentDetails/${customer.id}`}>
+                            <Button color="blue" size="sm">
+                                Ver
+                            </Button>
+                        </Link>
                     </div>
                 ))
             }

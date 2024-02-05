@@ -4,6 +4,7 @@ import Home from "./Home";
 import CustomerDetails from "./CustomerDetails";
 import PaymentPage from "./PaymentPage";
 import NewCustomer from "./NewCustomer";
+import PaymentDetails from "./PaymentDetails";
 
 
 const router = createBrowserRouter([
@@ -21,7 +22,7 @@ const router = createBrowserRouter([
     },
     {
         path: "/paymentDetails/:customerID",
-        element: <CustomerDetails />
+        element: <PaymentDetails />
     },
     {
         path: "/paymentPage",
