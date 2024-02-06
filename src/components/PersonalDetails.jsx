@@ -1,6 +1,7 @@
 import { Button, Typography, Input } from "@material-tailwind/react";
 import database from "../../database/db"
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
+import { IoMdArrowRoundBack } from "react-icons/io";    
 
 const PersonalDetails = () => {
     const { customerID } = useParams();
@@ -10,6 +11,11 @@ const PersonalDetails = () => {
 
     return(
             <div className="">
+                <Link to={'/home'}>
+                    <Button color="blue" size="sm" className="rounded-full mb-2">
+                        <IoMdArrowRoundBack size={16} />
+                    </Button>
+                </Link>
                     <Typography variant="h4" className="mb-2">
                     Dados do cliente
                     </Typography>

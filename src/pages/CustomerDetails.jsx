@@ -6,7 +6,7 @@ const CustomerDetails = () => {
 
 
   return(
-    <div className="bg-gray-400 p-5 shadow-lg">
+    <div className="bg-gray-400 p-5 shadow-lg rounded-lg">
       <PersonalDetails />
       <PersonalLoanDetails />
     </div>

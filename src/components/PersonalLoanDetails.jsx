@@ -32,6 +32,15 @@ const PersonalLoanDetails = () =>{
                     </div>
                 ))
             }
+            <div className="buttons flex mt-3 gap-2">
+                <Button color="black">
+                    Novo Empréstimo
+                </Button>
+
+                <Button color="blue">
+                    Editar dados
+                </Button>
+            </div>
         </div>
     )
 }
