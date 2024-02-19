@@ -1,3 +1,4 @@
+const Client = require('../models/Client');
 const Loan = require('../models/Loan');
 
 module.exports = {
@@ -5,19 +6,20 @@ module.exports = {
         const { client_id } = req.params;
         const { total_to_pay, installments_number, rental_item_description, return_date } = req.body;
 
-        const loan = await Loan.findByPk(client_id);
+        const client = await Client.findByPk(client_id);
 
-        if (!loan) {
-            return res.send("Cliente nao existe!");
+        if ( !client ) {
+            return res.send("Cliente não existe");
         }
 
-        const loans = await Address.create({
+        const loan = await Loan.create({
             total_to_pay, 
             installments_number, 
             rental_item_description, 
-            return_date
+            return_date,
+            client_id,
         });
 
-        return res.json(loans);
+        return res.json(loan);
     }
 };

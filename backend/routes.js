@@ -11,5 +11,6 @@ routes.post('/clients', ClientController.store);
 
 // Loans Methods
 routes.post('/clients/:client_id/loans', LoanController.store);
+routes.get('/clients/:client_id/loans', LoanController.store);
 
 module.exports = routes;
