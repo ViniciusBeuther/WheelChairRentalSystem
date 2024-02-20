@@ -21,5 +21,15 @@ module.exports = {
         });
 
         return res.json(loan);
+    },
+
+    async index(req, res) {
+        const { client_id } = req.params;
+
+        const client = await Client.findByPk(client_id, {
+            include: { association: 'loans' }
+        });
+
+        return res.json(client);
     }
 };

@@ -19,8 +19,8 @@ class Client extends Model {
         })
     }
 
-    static associate( models ) {
-        this.hasMany(models.Loans, { foreignKey: 'client_id', as: 'loans' })
+    static associate(models) {
+        this.hasMany(models.Loan, { foreignKey: 'client_id', as: 'loans' }); // Corrected association
     }
 }
 
