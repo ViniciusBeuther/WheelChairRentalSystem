@@ -14,6 +14,7 @@ class Loan extends Model {
 
     static associate(models) {
         this.belongsTo(models.Client, { foreignKey: 'client_id', as: 'client' });
+        this.hasMany(models.Installment, { foreignKey: 'loan_id', as: 'installments'});
     }
 }
 

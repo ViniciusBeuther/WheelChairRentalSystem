@@ -1,26 +1,23 @@
+const Client = require('../models/Client');
 const Installment = require('../models/Installment');
 const Loan = require('../models/Loan');
-const Client = require('../models/Client');
 
 module.exports = {
-    async store(req, res) {
+    async storeInstallment(req, res) {
         const { loan_id } = req.params;
         const { price, receipt, maturity_date, is_paid, paid_at } = req.body;
 
         const loan = await Loan.findByPk(loan_id);
 
-        if (!loan) {
-            return res.send("Não existe empréstimo com esse ID");
+        if ( !loan ) {
+            return res.send("Não existe empréstimos");
         }
-
-        // Corrija o formato da data para "YYYY-MM-DD"
-        const correctedMaturityDate = new Date(maturity_date).toISOString().split('T')[0];
 
         const installment = await Installment.create({
             loan_id,
-            price,
+            price, 
             receipt,
-            maturity_date: correctedMaturityDate, // Use a data corrigida
+            maturity_date,
             is_paid,
             paid_at,
         });
@@ -28,32 +25,14 @@ module.exports = {
         return res.json(installment);
     },
 
-    async index(req, res) {
+    async listInstallment(req, res) {
         const { client_id } = req.params;
 
-        try {
-            // Busca o cliente pelo ID e inclui os empréstimos e as parcelas associados
-            const client = await Client.findByPk(client_id, { 
-                include: { 
-                    model: Loan, 
-                    as: 'loans', 
-                    include: { 
-                        model: Installment, 
-                        as: 'installments' 
-                    } 
-                } 
-            });
+        const client = await Client.findByPk(client_id, {
+            include: { association: 'loans' }
+        });
 
-            if (!client) {
-                return res.status(404).json({ error: 'Cliente não encontrado' });
-            }
-
-            // Retorna os empréstimos do cliente, incluindo as parcelas de cada empréstimo
-            return res.json(client.loans);
-        } catch (error) {
-            console.error(error);
-            return res.status(500).json({ error: 'Erro ao buscar empréstimos do cliente' });
-        }
+        return res.json(client);
     },
 
     async delete(req, res) {
