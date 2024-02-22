@@ -4,28 +4,23 @@ const Client = require('../models/Client');
 
 module.exports = {
     async store(req, res) {
-        const { loan_id } = req.params;
-        const { price, receipt, maturity_date, is_paid, paid_at } = req.body;
+        const { client_id } = req.params;
+        const { total_to_pay, installments_number, rental_item_description, return_date } = req.body;
 
-        const loan = await Loan.findByPk(loan_id);
+        try {
+            const loan = await Loan.create({
+                client_id,
+                total_to_pay,
+                installments_number,
+                rental_item_description,
+                return_date
+            });
 
-        if (!loan) {
-            return res.send("Não existe empréstimo com esse ID");
+            return res.status(201).json(loan);
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ error: 'Erro ao criar empréstimo' });
         }
-
-        // Corrija o formato da data para "YYYY-MM-DD"
-        const correctedMaturityDate = new Date(maturity_date).toISOString().split('T')[0];
-
-        const installment = await Installment.create({
-            loan_id,
-            price,
-            receipt,
-            maturity_date: correctedMaturityDate, // Use a data corrigida
-            is_paid,
-            paid_at,
-        });
-
-        return res.json(installment);
     },
 
     async index(req, res) {
@@ -67,28 +62,31 @@ module.exports = {
     },
 
     async update(req, res) {
-        const { installment_id } = req.params;
+        const { loan_id } = req.params;
         const {
-            price,
-            receipt,
-            maturity_date,
-            is_paid,
-            paid_at
+            total_to_pay,
+            installments_number,
+            rental_item_description,
+            return_date
         } = req.body;
-
-        const installment = await Installment.findByPk(installment_id);
-        if (!installment) {
-            return res.status(404).json({ error: 'Parcela não encontrada' });
+    
+        try {
+            let loan = await Loan.findByPk(loan_id);
+            if (!loan) {
+                return res.status(404).json({ error: 'Empréstimo não encontrado' });
+            }
+    
+            loan.total_to_pay = total_to_pay;
+            loan.installments_number = installments_number;
+            loan.rental_item_description = rental_item_description;
+            loan.return_date = return_date;
+    
+            await loan.save();
+    
+            return res.json(loan);
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ error: 'Erro ao atualizar empréstimo' });
         }
-
-        installment.price = price;
-        installment.receipt = receipt;
-        installment.maturity_date = maturity_date;
-        installment.is_paid = is_paid;
-        installment.paid_at = paid_at;
-
-        await installment.save();
-
-        return res.json(installment);
     }
-};
+    };

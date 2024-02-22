@@ -26,13 +26,25 @@ module.exports = {
     },
 
     async listInstallment(req, res) {
-        const { client_id } = req.params;
+        const { loan_id } = req.params;
 
-        const client = await Client.findByPk(client_id, {
-            include: { association: 'loans' }
-        });
+        try {
+            const loan = await Loan.findByPk(loan_id, {
+                include: {
+                    model: Installment,
+                    as: 'installments',
+                }
+            });
 
-        return res.json(client);
+            if (!loan) {
+                return res.status(404).json({ error: 'Emprestimo não encontrado' });
+            }
+
+            return res.json(loan.installments);
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ error: 'Erro ao buscar emprestimos do cliente' });
+        }
     },
 
     async delete(req, res) {

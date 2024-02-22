@@ -15,12 +15,12 @@ routes.put('/clients/:id', ClientController.update);
 // Loans Methods: GET/POST/DELETE/UPDATE
 routes.post('/clients/:client_id/loans', LoanController.store);
 routes.get('/clients/:client_id/loans', LoanController.index);
-routes.put('/clients/:client_id/loans', LoanController.update);
-routes.delete('/clients/:client_id/loans', LoanController.delete);
+routes.put('/clients/:client_id/loans/:loan_id', LoanController.update);
+routes.delete('/clients/:client_id/loans/:loan_id', LoanController.delete);
 
 
-routes.get('/loans/:loan_id/installments/:installment_id', InstallmentController.listInstallment);
-routes.post('/loans/:loan_id/installments/:installment_id', InstallmentController.storeInstallment);
+routes.get('/loans/:loan_id/installments/', InstallmentController.listInstallment);
+routes.post('/loans/:loan_id/installments/', InstallmentController.storeInstallment);
 routes.put('/loans/:loan_id/installments/:installment_id', InstallmentController.update);
 routes.delete('/loans/:loan_id/installments/:installment_id', InstallmentController.delete);
 
