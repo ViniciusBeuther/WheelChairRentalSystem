@@ -52,13 +52,13 @@ module.exports = {
     },
 
     async delete(req, res) {
-        const { installment_id } = req.params;
-        const installment = await Installment.findByPk(installment_id);
-        if (!installment) {
-            return res.status(404).json({ error: 'Parcela não encontrada' });
+        const { loan_id } = req.params;
+        const loan = await Loan.findByPk(loan_id);
+        if (!loan) {
+            return res.status(404).json({ error: 'Empréstimo não encontrado' });
         }
-        await installment.destroy();
-        return res.json({ message: 'Parcela deletada com sucesso' });
+        await loan.destroy();
+        return res.json({ message: 'Empréstimo removido com sucesso' });
     },
 
     async update(req, res) {
