@@ -1,15 +1,12 @@
 import { Button, Typography, Input } from "@material-tailwind/react";
-import database from "../../database/db"
 import { Link, useParams } from "react-router-dom"
 import { IoMdArrowRoundBack } from "react-icons/io";    
 import { useState } from "react";
 
-const PersonalDetails = () => {
+const PersonalDetails = ({client}) => {
     const [isDisabled, setIsDisabled] = useState(true)
     const { customerID } = useParams();
-    const db = database;
-    const customer = db.find(item => item.id === +customerID);
-    console.log(customerID, customer)
+    const customer = client;
 
     return(
             <div className="">
@@ -41,46 +38,46 @@ const PersonalDetails = () => {
                     <section className="flex gap-5" id="customerInfo2ndRow">
                     <span>
                         <label htmlFor="street">Rua</label>
-                        <Input value={customer.address.st} disabled={isDisabled} />
+                        <Input value={customer.street} disabled={isDisabled} />
                     </span>
 
                     <span>
                         <label htmlFor="houseNumber">Número</label>
-                        <Input value={customer.address.number} disabled={isDisabled} />
+                        <Input value={customer.house_number} disabled={isDisabled} />
                     </span>
 
                     <span>
                         <label htmlFor="neighborhood">Bairro</label>
-                        <Input value={customer.address.neighborhood} disabled={isDisabled} />
+                        <Input value={customer.neighborhood} disabled={isDisabled} />
                     </span>
                     </section>
 
                     <section className="flex gap-5" id="customerInfo3rdRow">
                     <span>
                         <label htmlFor="zipcode">CEP</label>
-                        <Input value={customer.address.zipcode} disabled={isDisabled} />
+                        <Input value={customer.zipcode} disabled={isDisabled} />
                     </span>
 
                     <span>
                         <label htmlFor="city">Cidade</label>
-                        <Input value={customer.address.city} disabled={isDisabled} />
+                        <Input value={customer.city} disabled={isDisabled} />
                     </span>
                     
                     <span>
                         <label htmlFor="state">Estado</label>
-                        <Input value={customer.address.state} disabled={isDisabled} />
+                        <Input value={customer.state} disabled={isDisabled} />
                     </span>
                     </section>
 
                     <section className="flex gap-5" id="customerInfo4thRow">
                     <span>
                         <label htmlFor="phoneNumber">Telefone</label>
-                        <Input value={customer.phoneNumber} disabled={isDisabled} />
+                        <Input value={customer.phone_number} disabled={isDisabled} />
                     </span>
 
                     <span>
                         <label htmlFor="email">Email</label>
-                        <Input value={customer.email} disabled={isDisabled} />
+                        <Input value={customer.email_address} disabled={isDisabled} />
                     </span>
                     {isDisabled 
                         ? null 
@@ -99,12 +96,12 @@ const PersonalDetails = () => {
                 Empréstimos
             </Typography>
 
-            {customer.loan.length === 0 ?
+            {customer.loans.length === 0 ?
                 <Typography>
                     Não há emprestimo em aberto.
                 </Typography>
             : 
-                customer.loan.map((loan, index) => (
+                customer.loans.map((loan, index) => (
                     <div key={index} className="flex w-full items-center justify-between mt-2 bg-gray-100 p-2 rounded-lg">
                         <Typography>
                             {loan.numberOfInstallment}x de ${loan.installments.price}
@@ -135,3 +132,4 @@ const PersonalDetails = () => {
 }
 
 export default PersonalDetails
+

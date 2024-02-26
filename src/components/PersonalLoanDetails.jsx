@@ -1,13 +1,11 @@
 import { Link, useParams } from "react-router-dom";
-import database from "../../database/db";
 import { Button, Typography } from "@material-tailwind/react";
 import PaymentDetails from "../pages/PaymentDetails";
 
 
-const PersonalLoanDetails = () =>{
+const PersonalLoanDetails = ({client}) =>{
     const { customerID } = useParams();
-    const db = database;
-    const customer = db.find(item => item.id === +customerID);
+    const customer = client;
 
     return(
         null

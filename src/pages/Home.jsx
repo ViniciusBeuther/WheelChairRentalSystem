@@ -3,10 +3,8 @@ import Header from "./Header"
 import NewCustomer from "./NewCustomer"
 import SearchCustomer from "./SearchCustomer"
 import { Tab, TabPanel, Tabs, TabsBody, TabsHeader } from "@material-tailwind/react"
-import getData from "../API/API_Methods";
 
 const Home = () => {
-    getData();
     const [activeTab, setActiveTab] = useState("html")
     const data = [
         {
