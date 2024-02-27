@@ -1,15 +1,17 @@
-import { Link, useParams } from "react-router-dom";
-import { Button, Typography } from "@material-tailwind/react";
-import PaymentDetails from "../pages/PaymentDetails";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import GetDataFromId from "../API/GetDataFromId";
+
+const PersonalLoanDetails = () => {
+    const { id } = useParams();
+    const data = [];   
 
 
-const PersonalLoanDetails = ({client}) =>{
-    const { customerID } = useParams();
-    const customer = client;
+    return (
+        <div>
+            <h1>PersonalLoanDetail</h1>
+        </div>
+    );
+};
 
-    return(
-        null
-    )
-}
-
-export default PersonalLoanDetails
+export default PersonalLoanDetails;
