@@ -2,11 +2,17 @@ import { Button, Typography, Input } from "@material-tailwind/react";
 import { Link, useParams } from "react-router-dom"
 import { IoMdArrowRoundBack } from "react-icons/io";    
 import { useState } from "react";
+import GetDataFromId from "../API/GetDataFromId";
 
-const PersonalDetails = ({client}) => {
-    const [isDisabled, setIsDisabled] = useState(true)
+const PersonalDetails = () => {
+    const [isDisabled, setIsDisabled] = useState(true);
+    let customer = {};
     const { customerID } = useParams();
-    const customer = client;
+    const customer_request = GetDataFromId(customerID);
+    
+    customer_request.then((client) => {
+        customer = client;
+    })
 
     return(
             <div className="">
@@ -96,7 +102,7 @@ const PersonalDetails = ({client}) => {
                 Empréstimos
             </Typography>
 
-            {customer.loans.length === 0 ?
+            {!customer.loans ?
                 <Typography>
                     Não há emprestimo em aberto.
                 </Typography>
@@ -129,6 +135,7 @@ const PersonalDetails = ({client}) => {
         </div>
         </div>
     )
+    
 }
 
 export default PersonalDetails
