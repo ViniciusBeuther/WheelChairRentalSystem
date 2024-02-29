@@ -1,19 +1,29 @@
 import { Button, Typography, Input } from "@material-tailwind/react";
 import { Link, useParams } from "react-router-dom"
 import { IoMdArrowRoundBack } from "react-icons/io";    
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import GetDataFromId from "../API/GetDataFromId";
 
 const PersonalDetails = () => {
     const [isDisabled, setIsDisabled] = useState(true);
-    let customer = {};
+    const [customer, setCustomer] = useState(null);
+    let customers_arr = [];
     const { customerID } = useParams();
     const customer_request = GetDataFromId(customerID);
-    
-    customer_request.then((client) => {
-        customer = client;
-    })
 
+    customer_request
+    .then((client) => {
+        customers_arr.push(client);
+        setCustomer([...customers_arr]); 
+    })
+    .catch((error) => {
+        console.error('Error fetching customer:', error);
+    });
+
+    if(!customer){
+        return <p>loading...</p>
+    } 
+    
     return(
             <div className="">
                 <Link to={'/home'}>
@@ -137,6 +147,7 @@ const PersonalDetails = () => {
     )
     
 }
+
 
 export default PersonalDetails
 
