@@ -10,7 +10,7 @@ const GetDataFromId = async (id) => {
                 const response = await fetch(`http://localhost:3030/clients/${id}`);
                 const jsonData = await response.json();
                 console.log("Dados obtidos com sucesso: ");
-                //console.log(jsonData);
+                // console.log(jsonData);
                 
                 setData(jsonData);
                 // console.log(data);
