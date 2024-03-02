@@ -34,7 +34,6 @@ function PersonalDetails(){
         fetchData();
     }, [customerID]);
 
-
     return (
         isLoaded ? (
             <>
@@ -149,7 +148,7 @@ function PersonalDetails(){
                                             {loan.rental_item_description}
                                         </Typography>
 
-                                        <Link>
+                                        <Link to={`/paymentDetails/${customerID}/${loan.id}`}>
                                             <Button color="blue" size="md">
                                                 Ver
                                             </Button>
