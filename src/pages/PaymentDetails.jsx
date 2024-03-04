@@ -1,6 +1,14 @@
 import { Typography } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
+import Loading from "../components/Loading";
+
+// Function to format the maturity date
+function formatDate(date){
+  const formattedDateToBR = date.replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1");
+
+  return formattedDateToBR;
+}
 
 const PaymentDetails = () => {
   const { customerID } = useParams();
@@ -30,7 +38,7 @@ const PaymentDetails = () => {
 useEffect(() => {
   const fetchLoans = async () => {
       try {
-          const response = await fetch(`http://localhost:3030/clients/${customerID}/loans`);
+          const response = await fetch(`http://localhost:3030/clients/${customerID}/loans/${loanID}`);
           const jsonResponse = await response.json();
           setLoans(jsonResponse);
           setLoanIsLoaded(true);
@@ -48,14 +56,26 @@ useEffect(() => {
 
   return(
 
-    !isLoaded && !loanIsLoaded? <Typography>Loading...</Typography> :(
+    !isLoaded && !loanIsLoaded? <Loading /> :(
 
     <>
-      <Typography>
-        {customer.name}
-      </Typography>
-      <div>
-        {console.log(loans)}
+      <div className="bg-gray-200">
+        <Typography variant="h4">
+          {customer.name}
+        </Typography>
+        <Typography variant="h5">
+          Dados do empréstimo:
+        </Typography>
+
+        <Typography>
+          {`Valor total a pagar: R$${loans.total_to_pay.toFixed(2)}`}
+        </Typography>
+        <Typography>
+          {`Numero total de parcelas: ${loans.installments_number}`}
+        </Typography>
+        <Typography>
+          {`Data de devolução: ${formatDate(loans.return_date)}`}
+        </Typography>
       </div>
     </>
     ))
