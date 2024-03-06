@@ -1,4 +1,4 @@
-import { Typography } from "@material-tailwind/react";
+import { Typography, Button } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 import Loading from "../components/Loading";
@@ -17,6 +17,7 @@ const PaymentDetails = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [loanIsLoaded, setLoanIsLoaded] = useState(false);
   const [loans, setLoans] = useState();
+  let numberOfInstallments = 0;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,33 +50,50 @@ useEffect(() => {
       }
   };
 
-  fetchLoans();
-}, [customerID]);
+  fetchLoans(); 
+}, [loanID]);
 
 
 
   return(
 
-    !isLoaded && !loanIsLoaded? <Loading /> :(
+    !isLoaded && !loanIsLoaded ? <Loading /> :(
 
     <>
       <div className="bg-gray-200">
         <Typography variant="h4">
           {customer.name}
-        </Typography>
+        </Typography> 
         <Typography variant="h5">
           Dados do empréstimo:
         </Typography>
 
         <Typography>
-          {`Valor total a pagar: R$${loans.total_to_pay.toFixed(2)}`}
+          {loans && `Valor total a pagar: R$${loans.total_to_pay.toFixed(2)}`}
         </Typography>
         <Typography>
-          {`Numero total de parcelas: ${loans.installments_number}`}
+          {loans && `Numero total de parcelas: ${loans.installments_number}`}
         </Typography>
         <Typography>
-          {`Data de devolução: ${formatDate(loans.return_date)}`}
+          {loans && `Data de devolução: ${formatDate(loans.return_date)}`}
         </Typography>
+        <hr />
+
+        {/* Parcelas */}
+        <Typography variant="h4">
+          Parcelas
+        </Typography>
+          {loans && loans.installments.map((element, index) => (
+            <div key={index} className="flex items-center justify-between bg-gray-400">
+              <p>{numberOfInstallments+1}x</p>
+              <p>R$ {element.price.toFixed(2)}</p>
+              {element.paid ? <p className="text-green-600">Pago</p> : <p className="text-red-600">Pendente</p>}
+
+              {element.paid ? <Button color="green">Recibo</Button>  : <Button color="red">Pagar</Button>}
+
+            </div>
+          ))}
+
       </div>
     </>
     ))
