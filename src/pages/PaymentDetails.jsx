@@ -2,6 +2,7 @@ import { Typography, Button } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 import Loading from "../components/Loading";
+import BackButton from "../components/BackButton";
 
 // Function to format the maturity date
 function formatDate(date){
@@ -60,37 +61,40 @@ useEffect(() => {
     !isLoaded && !loanIsLoaded ? <Loading /> :(
 
     <>
-      <div className="bg-gray-200">
+      <div className="bg-gray-200 p-5 rounded-lg shadow-lg">
+        <BackButton path={`customerDetails/${customerID}`} />
         <Typography variant="h4">
           {customer.name}
         </Typography> 
+        <br />
         <Typography variant="h5">
           Dados do empréstimo:
         </Typography>
+        <div className="details">
 
-        <Typography>
-          {loans && `Valor total a pagar: R$${loans.total_to_pay.toFixed(2)}`}
-        </Typography>
-        <Typography>
-          {loans && `Numero total de parcelas: ${loans.installments_number}`}
-        </Typography>
-        <Typography>
-          {loans && `Data de devolução: ${formatDate(loans.return_date)}`}
-        </Typography>
+          <Typography>
+            {loans && `Valor total a pagar: R$${loans.total_to_pay.toFixed(2)}`}
+          </Typography>
+          <Typography>
+            {loans && `Numero total de parcelas: ${loans.installments_number}`}
+          </Typography>
+          <Typography>
+            {loans && `Data de devolução: ${formatDate(loans.return_date)}`}
+          </Typography>
+        </div>
         <hr />
 
         {/* Parcelas */}
-        <Typography variant="h4">
+        <Typography variant="h4" className="my-2">
           Parcelas
         </Typography>
           {loans && loans.installments.map((element, index) => (
-            <div key={index} className="flex items-center justify-between bg-gray-400">
+            <div key={index} className="flex items-center justify-between bg-gray-400 p-2 rounded-lg gap-10 mb-2">
               <p>{numberOfInstallments+1}x</p>
               <p>R$ {element.price.toFixed(2)}</p>
-              {element.paid ? <p className="text-green-600">Pago</p> : <p className="text-red-600">Pendente</p>}
-
-              {element.paid ? <Button color="green">Recibo</Button>  : <Button color="red">Pagar</Button>}
-
+              {element.is_paid ? <p className="text-green-600">Pago</p> : <p className="text-red-600">Pendente</p>}
+              {console.log(element)}
+              {element.is_paid ? <Button color="green" size="sm">Recibo</Button>  : <Button color="red" size="sm">Pagar</Button>}
             </div>
           ))}
 
