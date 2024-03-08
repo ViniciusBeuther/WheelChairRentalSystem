@@ -5,6 +5,7 @@ import CustomerDetails from "./CustomerDetails";
 import PaymentPage from "./PaymentPage";
 import NewCustomer from "./NewCustomer";
 import PaymentDetails from "./PaymentDetails";
+import PayInstallment from "./PayInstallment";
 
 
 const router = createBrowserRouter([
@@ -22,7 +23,13 @@ const router = createBrowserRouter([
     },
     {
         path: "/paymentDetails/:customerID/:loanID",
-        element: <PaymentDetails />
+        element: <PaymentDetails />,
+        children:[
+            {
+                path: "installments",
+                element: <PayInstallment />,
+            }
+        ]
     },
     {
         path: "/paymentPage",

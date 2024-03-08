@@ -1,11 +1,11 @@
 import { Typography, Button } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom";
 import Loading from "../components/Loading";
 import BackButton from "../components/BackButton";
 
 // Function to format the maturity date
-function formatDate(date){
+function formatDate(date) {
   const formattedDateToBR = date.replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1");
 
   return formattedDateToBR;
@@ -22,56 +22,52 @@ const PaymentDetails = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-        try {
-            const response = await fetch(`http://localhost:3030/clients/${customerID}`);
-            const jsonResponse = await response.json();
-            setCustomer(jsonResponse);
-            setIsLoaded(true);
-            //console.log("Success!");
-            //console.log(jsonResponse);
-        } catch(err) {
-            console.log(err);
-        }
+      try {
+        const response = await fetch(
+          `http://localhost:3030/clients/${customerID}`
+        );
+        const jsonResponse = await response.json();
+        setCustomer(jsonResponse);
+        setIsLoaded(true);
+        //console.log("Success!");
+        //console.log(jsonResponse);
+      } catch (err) {
+        console.log(err);
+      }
     };
 
     fetchData();
-}, [customerID]);
-  
-useEffect(() => {
-  const fetchLoans = async () => {
+  }, [customerID]);
+
+  useEffect(() => {
+    const fetchLoans = async () => {
       try {
-          const response = await fetch(`http://localhost:3030/clients/${customerID}/loans/${loanID}`);
-          const jsonResponse = await response.json();
-          setLoans(jsonResponse);
-          setLoanIsLoaded(true);
-          //console.log("Success!");
-          console.log(jsonResponse);
-      } catch(err) {
-          console.log(err);
+        const response = await fetch(
+          `http://localhost:3030/clients/${customerID}/loans/${loanID}`
+        );
+        const jsonResponse = await response.json();
+        setLoans(jsonResponse);
+        setLoanIsLoaded(true);
+        //console.log("Success!");
+        console.log(jsonResponse);
+      } catch (err) {
+        console.log(err);
       }
-  };
+    };
 
-  fetchLoans(); 
-}, [loanID]);
+    fetchLoans();
+  }, [loanID]);
 
-
-
-  return(
-
-    !isLoaded && !loanIsLoaded ? <Loading /> :(
-
+  return !isLoaded && !loanIsLoaded ? (
+    <Loading />
+  ) : (
     <>
       <div className="bg-gray-200 p-5 rounded-lg shadow-lg">
         <BackButton path={`customerDetails/${customerID}`} />
-        <Typography variant="h4">
-          {customer.name}
-        </Typography> 
+        <Typography variant="h4">{customer.name}</Typography>
         <br />
-        <Typography variant="h5">
-          Dados do empréstimo:
-        </Typography>
+        <Typography variant="h5">Dados do empréstimo:</Typography>
         <div className="details">
-
           <Typography>
             {loans && `Valor total a pagar: R$${loans.total_to_pay.toFixed(2)}`}
           </Typography>
@@ -88,22 +84,40 @@ useEffect(() => {
         <Typography variant="h4" className="my-2">
           Parcelas
         </Typography>
-          {loans && loans.installments.map((element, index) => (
-            <div key={index} className="flex items-center justify-between bg-gray-400 p-2 rounded-lg gap-10 mb-2">
-              <p>{numberOfInstallments+1}x</p>
+        {loans &&
+          loans.installments.map((element, index) => (
+            <div
+              key={index}
+              className="flex items-center justify-between bg-gray-400 p-2 rounded-lg gap-10 mb-2"
+            >
+              <p>{numberOfInstallments + 1}x</p>
               <p>R$ {element.price.toFixed(2)}</p>
-              {element.is_paid ? <p className="text-green-600">Pago</p> : <p className="text-red-600">Pendente</p>}
+              {element.is_paid ? (
+                <p className="text-green-600">Pago</p>
+              ) : (
+                <p className="text-red-600">Pendente</p>
+              )}
               {console.log(element)}
-              {element.is_paid ? <Button color="green" size="sm">Recibo</Button>  : <Button color="red" size="sm">Pagar</Button>}
+              {element.is_paid ? (
+                
+                <Button color="green" size="sm">
+                  Recibo
+                </Button>
+              ) : (
+                <Link to={"./installments"}>
+                  <Button color="red" size="sm">
+                    Pagar
+                  </Button>
+                </Link>
+              )}
             </div>
           ))}
-
       </div>
     </>
-    ))
-}
+  );
+};
 
-export default PaymentDetails
+export default PaymentDetails;
 
 /*
 "id": 2,
