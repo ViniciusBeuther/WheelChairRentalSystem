@@ -102,7 +102,7 @@ const PaymentDetails = () => {
                 
                 <Button color="green" size="sm">
                   Recibo
-                </Button>
+                </Button> 
               ) : (
                 <Link to={"./installments"}>
                   <Button color="red" size="sm">
