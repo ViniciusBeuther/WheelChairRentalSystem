@@ -65,7 +65,7 @@ const PaymentDetails = () => {
       <div className="bg-gray-200 p-5 rounded-lg shadow-lg">
         <BackButton path={`customerDetails/${customerID}`} />
         <Typography variant="h4">{customer.name}</Typography>
-        <br />
+        <br /> 
         <Typography variant="h5">Dados do empréstimo:</Typography>
         <div className="details">
           <Typography>
